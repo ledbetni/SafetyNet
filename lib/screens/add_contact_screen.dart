@@ -3,6 +3,7 @@ import 'package:safetynet/lib.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AddContactScreen extends StatefulWidget {
   const AddContactScreen({super.key});
@@ -56,6 +57,20 @@ class _AddContactScreenState extends State<AddContactScreen> {
     }
   }
 
+  Future<void> _sendContactToCloud(name, number) async {
+    print('Calling sendMessageToCloud');
+    User? currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser != null) {
+      String userID = currentUser.uid;
+      addFirebaseContact(userID, name, number);
+    }
+
+    // else {
+    //   showLoginAlert(context);
+    // }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,6 +109,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
                   ? contact.phones?.first.value ?? ''
                   : '';
               await DatabaseHelper.instance.addContact(name, number);
+              await _sendContactToCloud(name, number);
               Navigator.pop(context, contact);
             },
             title: Text(contact.displayName ?? ''),

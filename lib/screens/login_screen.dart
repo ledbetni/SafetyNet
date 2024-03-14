@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  final user = await createUser(
+                  final user = await registerAndAddUser(
                       _emailController.text, _passwordController.text);
                   if (user != null) {
                     print('User signed up: ${user.email}');

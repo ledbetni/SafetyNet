@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:safetynet/lib.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SavedMessagesScreen extends StatefulWidget {
   const SavedMessagesScreen({super.key});
@@ -51,6 +52,20 @@ class _SavedMessagesScreenState extends State<SavedMessagesScreen> {
     _fetchSavedMessages();
   }
 
+  Future<void> _sendMessageToCloud(messageContent) async {
+    print('Calling sendMessageToCloud');
+    User? currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser != null) {
+      String userID = currentUser.uid;
+      addFirebaseMessage(userID, messageContent);
+    }
+
+    // else {
+    //   showLoginAlert(context);
+    // }
+  }
+
   void _showTextInputBottomSheet() {
     showModalBottomSheet(
         context: context,
@@ -71,6 +86,7 @@ class _SavedMessagesScreenState extends State<SavedMessagesScreen> {
                 ),
                 ElevatedButton(
                     onPressed: () async {
+                      await _sendMessageToCloud(_textController.text);
                       await DatabaseHelper.instance
                           .addSavedMessageList(_textController.text, null);
                       _fetchSavedMessages();
