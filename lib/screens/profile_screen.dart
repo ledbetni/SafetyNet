@@ -52,12 +52,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
           );
         } else {
-          return Center(
-            child: ElevatedButton(
-              onPressed: () => _navigateToLoginScreen(context),
-              child: Text('Log In'),
+          return Column(children: <Widget>[
+            SizedBox(
+              height: 200,
             ),
-          );
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: Text(
+                  'Log in or create an account to access features such as cloud storage'),
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () => _navigateToLoginScreen(context),
+                child: Text('Log In'),
+              ),
+            ),
+          ]);
         }
       },
     ));

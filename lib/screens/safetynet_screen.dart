@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:safetynet/lib.dart';
 import 'package:flutter_sms/flutter_sms.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SafetynetScreen extends StatefulWidget {
   const SafetynetScreen({super.key});
@@ -142,6 +143,21 @@ class _SafetynetScreenState extends State<SafetynetScreen> {
     }
   }
 
+  Future<void> _checkLoginStatusSync() async {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser != null) {
+      String userID = currentUser.uid;
+      await syncContactsFirebaseSQLite();
+      await syncMessagesFirebaseSQLite();
+      _fetchContacts();
+      _fetchSavedMessages();
+      //addFirebaseMessage(userID, messageContent);
+    } else {
+      showLoginAlert(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -196,11 +212,13 @@ class _SafetynetScreenState extends State<SafetynetScreen> {
           );
         },
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _sendAllMessages,
-      //   child: Icon(Icons.send),
-      //   tooltip: 'Send Messages',
-      // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _checkLoginStatusSync();
+        },
+        tooltip: 'Add Message',
+        child: Icon(Icons.cloud_outlined),
+      ),
     );
   }
 }
