@@ -13,5 +13,7 @@ export 'models/firebase_auth.dart';
 export 'models/firestore_helper.dart';
 export 'models/message.dart';
 export 'models/contact.dart';
+export 'models/geolocation.dart';
+export 'models/ios_method_channel.dart';
 export 'components/show_login_alert.dart';
 export 'app.dart';

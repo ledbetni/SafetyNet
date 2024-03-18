@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:safetynet/lib.dart';
+import 'package:safetynet/screens/map_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final String title = "SafetyNet";
@@ -16,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // Text('Profile Page',
     //     style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
     SavedMessagesScreen(),
+    MapScreen(),
     ProfileScreen(),
   ];
 
@@ -88,6 +90,10 @@ class _HomeScreenState extends State<HomeScreen> {
           //   icon: Icon(Icons.settings),
           //   label: 'Settings',
           // ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.map),
+            label: 'Map',
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',

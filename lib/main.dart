@@ -11,6 +11,7 @@ void main() async {
   } catch (e) {
     print("Error loading .env file: $e");
   }
+  //await NativeBridge.setApiKey();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

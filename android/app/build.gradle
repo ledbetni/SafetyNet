@@ -29,7 +29,7 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 34 //flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -50,10 +50,23 @@ android {
         applicationId "com.example.safetynet"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 20 //flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+        // def envFile = rootProject.file('../.env')
+        // if (envFile.exists()){
+        //     def envs =  new Properties()
+        //     envs.load(new FileInputStream(envFile))
+        //     // project.ext.set("ANDROID_GOOGLE_MAP_API_KEY", envs.getProperty("ANDROID_GOOGLE_MAP_API_KEY"))
+            
+        // }
+
+        manifestPlaceholders = [ANDROID_MAP_API_KEY: localProperties["ANDROID_MAP_API_KEY"] ?: "",
+        applicationName: "io.flutter.app.FlutterApplication"
+        ]
+        
     }
 
     buildTypes {

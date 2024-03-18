@@ -10,6 +10,7 @@
 .svn/
 migrate_working_dir/
 .env
+/android/local.properties
 # Firebase configuration files
 **/google-services.json
 **/GoogleService-Info.plist

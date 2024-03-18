@@ -82,7 +82,7 @@ class _SafetynetScreenState extends State<SafetynetScreen> {
       //  TO DO IMPLEMENT GEOLOCATION
       if (includeLocation) {
         // finalMessage += "\nLocation Pin Goes Here";
-        Position location = await _determinePosition();
+        Position location = await determinePosition();
         String messageWithPin =
             await appendLocationToMessage(finalMessage, location);
         String result =
@@ -104,7 +104,7 @@ class _SafetynetScreenState extends State<SafetynetScreen> {
     }
   }
 
-  Future<Position> _determinePosition() async {
+  Future<Position> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
